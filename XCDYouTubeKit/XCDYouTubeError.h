@@ -46,6 +46,10 @@ typedef NS_ENUM(NSInteger, XCDYouTubeErrorCode) {
 	*/
 	XCDYouTubeErrorUnknown = -5,
 	/**
+	 * Returned when a 400 HTTP code is returned. This may indicate that requests will no longer work without an update of some sort.
+	 */
+	XCDYouTubeErrorBadRequest = -1000,
+	/**
 	 *  Previously returned when the given video identifier string is invalid.
 	 *  Use `XCDYouTubeErrorNoStreamAvailable` instead.
 	 */

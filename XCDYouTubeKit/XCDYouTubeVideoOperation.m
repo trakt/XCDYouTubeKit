@@ -269,6 +269,12 @@ static NSError *YouTubeError(NSError *error, NSSet *regionsAllowed, NSString *la
 		[self handleConnectionError:[NSError errorWithDomain:XCDYouTubeVideoErrorDomain code:XCDYouTubeErrorTooManyRequests userInfo:@{NSLocalizedDescriptionKey : @"The operation couldn’t be completed because too many requests were sent."}] requestType:requestType];
 		return;
 	}
+	if ([(NSHTTPURLResponse *)response statusCode] == 400)
+	{
+		self.lastError = [NSError errorWithDomain:XCDYouTubeVideoErrorDomain code:XCDYouTubeErrorBadRequest userInfo:@{NSLocalizedDescriptionKey : @"Bad request."}];
+		[self finishWithError];
+		return;
+	}
 	if ([(NSHTTPURLResponse *)response statusCode] == 404 && responseString.length == 0)
 	{
 		[self handleConnectionError:[NSError errorWithDomain:XCDYouTubeVideoErrorDomain code:XCDYouTubeErrorEmptyResponse userInfo:@{NSLocalizedDescriptionKey : @"The response is empty."}] requestType:requestType];
